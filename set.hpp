@@ -34,7 +34,7 @@ namespace ft {
 		typedef typename allocator_type::pointer				pointer;
 		typedef typename allocator_type::const_pointer			const_pointer;
 		typedef ft::bidirectional_iterator< RB_Node<T> >		iterator;
-		typedef ft::bidirectional_iterator< RB_Node<const T> >	const_iterator;
+		typedef ft::bidirectional_iterator< RB_Node<T> >	const_iterator;
 		typedef ft::reverse_iterator<iterator>					reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 		typedef typename iterator_traits<iterator>::difference_type
@@ -221,7 +221,8 @@ namespace ft {
 		iterator lower_bound (const value_type& val) const {
 
 			key_compare comp = key_comp();
-			iterator it = begin();
+			//iterator it = begin();
+            const_iterator it = begin();
 			while (it != end()) {
 				if (!comp(*it, val))
 					return it;
@@ -233,7 +234,7 @@ namespace ft {
 		iterator upper_bound (const value_type& val) const {
 
 			key_compare comp = key_comp();
-			iterator it = begin();
+			const_iterator it = begin();
 			while (it != end()) {
 				if (comp(*it, val))
 					return it;

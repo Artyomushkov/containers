@@ -14,7 +14,7 @@ namespace ft {
         typedef T1  first_type;
         typedef T2  second_type;
 
-        pair() : first(NULL), second(NULL) {}
+        pair() : first(), second() {}
 
         template<class U, class V> 
         pair (const pair<U, V>& pr) : first(pr.first), second(pr.second) {}

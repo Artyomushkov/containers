@@ -14,14 +14,16 @@ namespace ft {
 	public:
 
 		typedef typename Node::value_type value_type;
-		typedef RB_Node<typename ft::remove_const<value_type>::type>*
-		        node_pointer;
+        typedef Node*                   node_pointer;
+        typedef const Node*             const_node_pointer;
 		typedef value_type* 			pointer;
 		typedef const value_type*		const_pointer;
 		typedef value_type& 			reference;
 		typedef const value_type& 		const_reference;
 		typedef std::ptrdiff_t 			difference_type;
 		typedef std::bidirectional_iterator_tag iterator_category;
+        /*typedef RB_Node<typename ft::remove_const<value_type>::type >*
+                node_pointer;*/
 		/*typedef std::bidirectional_iterator_tag iterator_category;
 		typedef typename ft::iterator_traits<T*>::value_type 		value_type;
 		typedef typename ft::iterator_traits<T*>::reference 		reference;
@@ -101,8 +103,8 @@ namespace ft {
 
 		bidirectional_iterator operator++(int) {
 
-			bidirectional_iterator<Node>	copy = *this;
-			++*this;
+			bidirectional_iterator	copy = *this;
+			++(*this);
 			return copy;
 		}
 
@@ -124,14 +126,14 @@ namespace ft {
 			return *this;
 		}
 
-		bidirectional_iterator&	operator--(int) {
+		bidirectional_iterator	operator--(int) {
 
-			bidirectional_iterator<Node>	copy = *this;
-			--*this;
+			bidirectional_iterator	copy = *this;
+			--(*this);
 			return copy;
 		}
 
-		node_pointer getBase() {
+		node_pointer getBase() const {
 			return _ptr;
 		}
 

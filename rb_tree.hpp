@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <algorithm>
+#include "type_traits.hpp"
 
 namespace ft {
 
@@ -35,6 +36,7 @@ struct  RB_Node {
 		this->red = src.red;
 		return *this;
 	}
+
 };
 
 template <typename T, typename Compare = std::less<T>, 
@@ -51,10 +53,14 @@ public:
 	typedef typename allocator_type::const_pointer      const_pointer;
 	typedef std::ptrdiff_t	                            difference_type;
 	typedef std::size_t	                                size_type;
-    typedef RB_Node<T>                                  node_type;
+    typedef RB_Node<value_type>                         node_type;
+    //typedef RB_Node<const value_type>                   const_node_type;
 	typedef typename Allocator::template 
                 rebind<node_type>::other	            node_allocator;
-    typedef	typename node_allocator::pointer            node_pointer;
+    //typedef	typename node_allocator::pointer            node_pointer;
+    typedef node_type*                                  node_pointer;
+    //typedef const_node_type*                            const_node_pointer;
+
 
 private:
 	Compare     	_comp;
@@ -147,7 +153,7 @@ public:
 		_node_alloc.deallocate(node, 1);
 	}
 
-    void	inorder_tree_walk(node_pointer x) {
+    void	inorder_tree_walk(node_pointer x) const {
 
 		if (x != _nil) {
 			inorder_tree_walk(x->left);
@@ -183,7 +189,7 @@ public:
 		return x;
 	}
 
-	node_pointer tree_successor(node_pointer x) {
+	node_pointer tree_successor(node_pointer x) const {
 
 		node_pointer y;
 		if (x->right != _nil)
@@ -196,7 +202,7 @@ public:
 		return y;
 	}
 
-	node_pointer tree_predecessor(node_pointer x) {
+	node_pointer tree_predecessor(node_pointer x) const {
 
 		node_pointer y;
 		if (x->left != _nil)
