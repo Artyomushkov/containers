@@ -1,14 +1,10 @@
-#include "rb_tree.hpp"
-#include <set>
-#include <iostream>
+#include "utils/utilities.hpp"
 
-int main()
+int main(void)
 {
-	std::set<int> s;
-	std::set<int>::iterator it;
-	for (it = s.begin(); it != s.end(); ++it) {
-		std::cout << *it << std::endl;
-        *it = 2;
-	}
-	return 0;
+    vector_test();
+    stack_test();
+    pair_test();
+    map_test();
+    set_test();
 }

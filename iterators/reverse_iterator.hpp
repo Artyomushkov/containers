@@ -1,7 +1,7 @@
 #ifndef CONTAINERS_REVERSE_ITERATOR_HPP
 #define CONTAINERS_REVERSE_ITERATOR_HPP
 
-# include "iterator_traits.hpp"
+# include "../utils/utilities.hpp"
 # include <memory>
 
 namespace ft {
@@ -33,11 +33,12 @@ namespace ft {
 
 		reference operator*() const {
 			Iterator copy = _iter;
-			return *(--copy);
+            reference res = *(--copy);
+            return res;
 		}
 
 		pointer operator->() const {
-			return(std::addressof(operator*()));
+			return &(operator*());
 		}
 
 		reverse_iterator& operator++() {
@@ -52,13 +53,13 @@ namespace ft {
 
 		reverse_iterator operator++(int) {
 			reverse_iterator copy = *this;
-			--(*this);
+			--_iter;
 			return copy;
 		}
 
 		reverse_iterator operator--(int) {
 			reverse_iterator copy = *this;
-			++(*this);
+			++_iter;
 			return copy;
 		}
 

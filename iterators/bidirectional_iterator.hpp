@@ -3,9 +3,10 @@
 
 # include <cstddef>
 # include <iterator>
-# include "iterator_traits.hpp"
-# include "../type_traits.hpp"
-# include "../rb_tree.hpp"
+# include "../utils/utilities.hpp"
+//# include "iterator_traits.hpp"
+//# include "../utils/type_traits.hpp"
+//# include "../tree/rb_tree.hpp"
 
 namespace ft {
 	template <typename Node>
@@ -22,17 +23,6 @@ namespace ft {
 		typedef const value_type& 		const_reference;
 		typedef std::ptrdiff_t 			difference_type;
 		typedef std::bidirectional_iterator_tag iterator_category;
-        /*typedef RB_Node<typename ft::remove_const<value_type>::type >*
-                node_pointer;*/
-		/*typedef std::bidirectional_iterator_tag iterator_category;
-		typedef typename ft::iterator_traits<T*>::value_type 		value_type;
-		typedef typename ft::iterator_traits<T*>::reference 		reference;
-		typedef typename ft::iterator_traits<T*>::pointer			pointer;
-		typedef typename ft::iterator_traits<T*>::difference_type	difference_type;
-		typedef RB_Node<typename ft::remove_const<value_type>::type >*
-		        node_pointer;
-		typedef const reference									const_reference;
-		typedef const pointer 									const_pointer;*/
 
 	protected:
 		node_pointer _ptr;
@@ -53,9 +43,9 @@ namespace ft {
 
 		~bidirectional_iterator() {}
 
-		operator bidirectional_iterator<RB_Node<const value_type> > () const {
+		/*operator bidirectional_iterator<Node> () const {
 			return bidirectional_iterator(_ptr, _root, _nil);
-		}
+		}*/
 
 		bidirectional_iterator& operator=(const bidirectional_iterator&
 		src) {
@@ -85,19 +75,18 @@ namespace ft {
 
 		bidirectional_iterator& operator++(void) {
 
-			if (_ptr->right != _nil) {
-				//_ptr = tree_minimum(_ptr->right);
+            if (_ptr->right != _nil) {
 				_ptr = _ptr->right;
 				while (_ptr->left != _nil)
 					_ptr = _ptr->left;
 				return *this;
 			}
-			node_pointer x = _ptr;
-			_ptr = x->parent;
-			while (_ptr != _nil && x == _ptr->right) {
-				x = _ptr;
-				_ptr = _ptr->parent;
+			node_pointer y = _ptr->parent;
+			while (y != _nil && _ptr == y->right) {
+				_ptr = y;
+				y = y->parent;
 			}
+            _ptr = y;
 			return *this;
 		}
 
@@ -110,19 +99,25 @@ namespace ft {
 
 		bidirectional_iterator&	operator--(void) {
 
-			if (_ptr->left != _nil) {
-				//_ptr = tree_minimum(_ptr->right);
-				_ptr = _ptr->right;
-				while (_ptr->left != _nil)
-					_ptr = _ptr->left;
+            if (_ptr == _nil) {
+                _ptr = _root;
+                while (_ptr->right != _nil) {
+                    _ptr = _ptr->right;
+                }
+                return *this;
+            }
+            if (_ptr->left != _nil) {
+				_ptr = _ptr->left;
+				while (_ptr->right != _nil)
+					_ptr = _ptr->right;
 				return *this;
 			}
-			node_pointer x = _ptr;
-			_ptr = x->parent;
-			while (_ptr != _nil && x == _ptr->left) {
-				x = _ptr;
-				_ptr = _ptr->parent;
+			node_pointer y = _ptr->parent;
+			while (y != _nil && _ptr == y->left) {
+				_ptr = y;
+				y = y->parent;
 			}
+            _ptr = y;
 			return *this;
 		}
 
